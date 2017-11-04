@@ -17,12 +17,19 @@ in `~/.zshrc`, and reload the zsh by `exec $SHELL -l` to use completion.
 
 ### container
 `docker container run --publish 80:80 nginx`: publish means to map the traffic of host port to the client port.
+
 `docker container run --publish 80:80 --detach --name myhost nginx`
+
 `docker container ls`: shows running container.
+
 `docker container ls -a`: shows history.
+
 `docker container stop 6`
+
 `docker container logs myhost`
+
 `docker container top myhost`: show pid
+
 `docker container rm 6` or `docker container rm -f 6`: use unique id to remove container.
 
 * find image from cache, if not found, then fetch from docker hub.
@@ -33,6 +40,7 @@ in `~/.zshrc`, and reload the zsh by `exec $SHELL -l` to use completion.
 `docker container run --name mongo -d mongo`: call it mongo and run it on the background and using mongo image.
 
 `docker container inspect`
+
 `docker container stats`: real time report of container.
 
 `docker container run -it --name proxy nginx bash`, after the image name, it follows the “command name”, that will run at the start of starting an image. “-it” means going ssh into the container and shell interactively.
@@ -48,6 +56,7 @@ in `~/.zshrc`, and reload the zsh by `exec $SHELL -l` to use completion.
 OR use `docker container exec -it --name proxy nginx bash`, different with `run` is that `exec` will not overwrite the original command, but instead it adds the additional commands besides.
 
 `docker pull <image name>`
+
 `docker image ls`: show all images.
 
 ### docker network
@@ -55,6 +64,7 @@ OR use `docker container exec -it --name proxy nginx bash`, different with `run`
 virtual network, so that the container in the same virtual network can communicate with each other freely. And can only expose to the public if specify by `-p port number`. And the default network is called “bridge”(the network NATed, behind the host IP); `docker network ls`: can list all the existing network.
 
 `docker network create new-app`
+
 `docker container run -d --net new-app --net-alias search elasticsearch:2`, and this command can be run in twice.
 
 * the default bridge network, cannot do the `--link` job, otherwise to create a new virtual network with driver. And later the `docker-compose` will ease the process so much(every time it will create custom network).
@@ -116,6 +126,7 @@ COPY index.html index.html
 
 `docker image build -t nginx-with-html .`: will build the image.
 so that we can run the container with the latest image.
+
 `docker container run -p 80:80 —rm  nginx-with-html`
 
 > The author open source his best practice on node with docker: [GitHub - BretFisher/node-docker-good-defaults: sample node app for Docker examples](https://github.com/BretFisher/node-docker-good-defaults)
