@@ -1,3 +1,16 @@
+## Init a node image in docker
+
+`docker image build -t node-app .`: `.` means from current directory.
+
+`docker container run -p 80:3000 node-app`: mapping the host `localhost:80` to container's 3000.
+
+`docker image tag node-app chocoluffy/node-helloworld`: tag the image with proper name. 
+
+`docker push chocoluffy/node-helloworld`: push the image to the remote DockerHub repository.
+
+
+## Notes
+
 ### docker completion in zsh
 
 zsh docker completion: [GitHub - greymd/docker-zsh-completion: Zsh completion for docker and docker-compose.](https://github.com/greymd/docker-zsh-completion)
