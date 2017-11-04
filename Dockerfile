@@ -26,6 +26,8 @@ EXPOSE 80 3000
 # - then it should create directory /usr/src/app for app files with 'mkdir -p /usr/src/app'
 RUN mkdir -p /usr/src/app
 
+WORKDIR /usr/src/app
+
 # - Node uses a "package manager", so it needs to copy in package.json file
 COPY package.json package.json
 
