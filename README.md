@@ -166,7 +166,7 @@ in production, use Swarm.
 so that onboard the new person will be `git clone` and `docker-compose up`
 
 ```python
-v ersion: '3'
+version: '3'
 
 services:
   proxy:
