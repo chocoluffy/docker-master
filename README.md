@@ -1,3 +1,4 @@
+
 ## Init a node image in docker
 
 `docker image build -t node-app .`: `.` means from current directory.
@@ -13,20 +14,7 @@
 
 ### docker completion in zsh
 
-zsh docker completion: [GitHub - greymd/docker-zsh-completion: Zsh completion for docker and docker-compose.](https://github.com/greymd/docker-zsh-completion)
-
-use zplug to mange zsh  https://github.com/zplug/zplug
-
-meaning add 
-
-```
-# zplug
-source ~/.zplug/init.zsh
-zplug "greymd/docker-zsh-completion"
-
-```
-
-in `~/.zshrc`, and reload the zsh by `exec $SHELL -l` to use completion.
+[tutorial](https://docs.docker.com/machine/completion/#zsh)
 
 ### container
 `docker container run --publish 80:80 nginx`: publish means to map the traffic of host port to the client port.
@@ -144,7 +132,56 @@ so that we can run the container with the latest image.
 
 > The author open source his best practice on node with docker: [GitHub - BretFisher/node-docker-good-defaults: sample node app for Docker examples](https://github.com/BretFisher/node-docker-good-defaults)
 
+### persistent data
 
+* container is immutable.
+* persistent data: Volumes, and Bind Mounts.
+
+even if we remove the container, the data is saved. it will save a specific address of data on the host. 
+
+`docker volume ls`: check all existing volumes. 
+`docker container run -d --name mysql -v mysql-db:/var/lib/mysql mysql`: naming the volume and its path.
+
+bind mounting: maps a host file to a container file directory. and cannot be specified in Dockerfile. 
+
+`docker container run -d --name nginx -p 80:80 -v $(pwd):/usr/share/nginx/html nginx`: will start a nginx server and map the current directory to one specify, so that the current html file will overwrite the default one. [bind-mount’s path starts with `/`]
+
+> once we map such bind-mount, whenever we create files from the host file directory, it will reflect on the container side!
+
+`docker run -p 80:4000 -v $(pwd):/site bretfisher/jekyll-serve`
+
+### docker compose
+
+  YAML file that describes solution for:
+* containers
+* networks
+* volumes
+
+docker-compose for local docker automation only?
+
+in production, use Swarm.
+`docker-compose up`
+`docker-compose down`
+
+so that onboard the new person will be `git clone` and `docker-compose up`
+
+```python
+v ersion: '3'
+
+services:
+  proxy:
+    image: nginx:1.13 # this will use the latest version of 1.11.x
+    ports:
+      - '80:80' # expose 80 on host and sent to 80 in container
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+  web:
+    image: httpd  # this will use httpd:latest
+
+# so that in this case, we want the nginx not as serving up static files; but used as a reverse proxy to direct traffic for the server behind.
+
+# network is not requried. 
+```
 
 
 
